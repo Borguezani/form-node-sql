@@ -43,7 +43,7 @@ const FormularioEdicao = ({onClose ,id}) => {
       data_termino: dataTermino,
     }
 
-    await fetch(`http://localhost:3030/form/${id}`, {
+    await fetch(`https://form-node-sql.onrender.com/form/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ export default function FormVotar({ data, onClose, id }) {
   const handleDelete = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`http://localhost:3030/form/${id}`, {
+      const response = await fetch(`https://form-node-sql.onrender.com/form/${id}`, {
         method: 'DELETE',
       })
       if (response.ok) {
@@ -44,6 +44,13 @@ export default function FormVotar({ data, onClose, id }) {
   const handleVotos = async (opcao) => {
     const dataAtualVoto = dayjs().utc() // Pegar a data atual em UTC
     const dataTerminoUTC = dayjs(data.data_termino).utc().subtract(6, 'hour').format('YYYY-MM-DDTHH:mm')
+    const dataInicioUTC = dayjs(data.data_inicio).utc().subtract(6, 'hour').format('YYYY-MM-DDTHH:mm')
+    if (dataAtualVoto.isBefore(dataInicioUTC)) {
+      setDataVoto(true)
+      alert('A enquete não iniciou! Não é possível votar.')
+      onClose(false)
+      return
+    }
     if (dataAtualVoto.isAfter(dataTerminoUTC)) {
       setDataVoto(true)
       alert('A enquete já terminou. Não é possível votar mais.')
@@ -60,7 +67,7 @@ export default function FormVotar({ data, onClose, id }) {
     }
 
     try {
-      const response = await fetch('http://localhost:3030/form', {
+      const response = await fetch('https://form-node-sql.onrender.com/form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
