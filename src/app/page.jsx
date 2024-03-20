@@ -8,7 +8,7 @@ export default function Home() {
   const [votos, setVotos] = useState([])
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3030/form')
+      const response = await fetch('https://form-node-sql.onrender.com/form')
       const data = await response.json()
       setData(data)
     } catch (error) {
@@ -18,7 +18,7 @@ export default function Home() {
 
   const fetchVotos = async () => {
     try {
-      const response = await fetch('http://localhost:3030/votos')
+      const response = await fetch('https://form-node-sql.onrender.com/votos')
       const data = await response.json()
       setVotos(data)
     } catch (error) {
